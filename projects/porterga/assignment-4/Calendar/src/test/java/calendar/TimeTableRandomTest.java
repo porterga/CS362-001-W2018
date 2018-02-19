@@ -68,8 +68,9 @@ public class TimeTableRandomTest {
 
 							 System.out.println("Start testing...");
 
-							try{
-								for (int iteration = 0; iteration < 10000; iteration++) {
+							//try{
+								for (int m = 0; m < 1000; m++) {
+									System.out.println(m);
 									long randomseed =System.currentTimeMillis(); //10
 						//			System.out.println(" Seed:"+randomseed );
 									Random random = new Random(randomseed);
@@ -95,7 +96,7 @@ public class TimeTableRandomTest {
 									CalDay cal2 = new CalDay(today);
 									CalDay cal5 = new CalDay(today_bad);
 									//Construct a new Appointment object with the initial data
-									for(int j = 0; j < 100; j++){
+									for(int j = 0; j < 50; j++){
 									Appt appt = new Appt(startHour,
 													 startMinuteg ,
 													 startDayg3 ,
@@ -121,6 +122,7 @@ public class TimeTableRandomTest {
 
 										cal5.addAppt(appt);
 										int recrand5 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
+										try{
 										if(j == 49){
 											appt.setStartMinute(-1);
 											cal2.addAppt(appt);
@@ -131,36 +133,47 @@ public class TimeTableRandomTest {
 											appt = null;
 										}
 										cal2.addAppt(appt);
+									}catch(NullPointerException e){}
 										//cal2.getAppts().add(j, appt);
 									}
 
 								 //if(!appt.getValid())continue;
-								for (int i = 0; i < 10; i++) {
+								for (int i = 0; i < 5; i++) {
 										String methodName = ApptRandomTest.RandomSelectMethod(random);
 
 
 												 /*if(cal2.getAppts().size() == 0)
 												 	System.out.println("yes");*/
+													try{
 												 cals = tb.getApptRange(cal2.getAppts(), today, today_bad);
 												 assertNotEquals(cals, tb.getApptRange(cal2.getAppts(), today, today_bad));
+												 }catch(DateOutOfRangeException d){}
+
+													 try{
 												 cals = tb.getApptRange(cal2.getAppts(), today_bad, today);
 												 assertNotEquals(cals, tb.getApptRange(cal2.getAppts(), today_bad, today));
+											 }catch(DateOutOfRangeException f){}
 
+													 try{
 												 cals = tb.getApptRange(cal5.getAppts(), today, today_bad2);
 												 assertNotEquals(cals, tb.getApptRange(cal5.getAppts(), today, today_bad2));
+											 }catch(DateOutOfRangeException g){}
+
+												 try{
 												 cals = tb.getApptRange(cal5.getAppts(), today_bad2, today);
 												 assertNotEquals(cals, tb.getApptRange(cal5.getAppts(), today_bad2, today));
+											 }catch(DateOutOfRangeException h){}
 
 									}
-
+/*
 									 elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
 												if((iteration%10000)==0 && iteration!=0 )
 															System.out.println("elapsed time: "+ elapsed + " of "+TestTimeout);
-
+*/
 								}
-							}catch(DateOutOfRangeException e){
+							//}catch(DateOutOfRangeException e){
 
-							}
+							//}
 
 							 System.out.println("Done testing...");
 						 }
@@ -188,19 +201,21 @@ public class TimeTableRandomTest {
 
 							 System.out.println("Start testing...");
 
-							try{
-								for (int iteration = 0; iteration < 1000; iteration++) {
+							//try{
+								for (int n = 0; n < 10000; n++) {
+									System.out.println(n);
 									long randomseed =System.currentTimeMillis(); //10
 						//			System.out.println(" Seed:"+randomseed );
 									Random random = new Random(randomseed);
 									int numApps = 0;
 									int startHour=ValuesGenerator.getRandomIntBetween(random, -1, 100);
+									int startHourg=ValuesGenerator.getRandomIntBetween(random, 1, 23);
 									int startMinute=ValuesGenerator.getRandomIntBetween(random, -1, 100);
-									int startMinuteg=ValuesGenerator.getRandomIntBetween(random, 0, 59);
+									int startMinuteg=ValuesGenerator.getRandomIntBetween(random, 1, 59);
 									int startDay=ValuesGenerator.getRandomIntBetween(random, -1, 100);
 									int startDayg=ValuesGenerator.getRandomIntBetween(random, 1, 31);
 									int startDayg2=ValuesGenerator.getRandomIntBetween(random, 1, 31);
-									int startDayg3=ValuesGenerator.getRandomIntBetween(random, 1, 31);
+									int startDayg3=ValuesGenerator.getRandomIntBetween(random, 1, 28);
 									int startMonth=ValuesGenerator.getRandomIntBetween(random, 1, 11);
 									int startMonthg=ValuesGenerator.getRandomIntBetween(random, 1, 11);
 									int startMonthg3=ValuesGenerator.getRandomIntBetween(random, 1, 11);
@@ -213,16 +228,24 @@ public class TimeTableRandomTest {
 									GregorianCalendar today_bad = new GregorianCalendar(startYear,startMonthg, startDayg2);
 									GregorianCalendar today_bad2 = new GregorianCalendar(2019,startMonthg, startDayg2);
 									CalDay cal2 = new CalDay(today);
+									CalDay cal3 = new CalDay(today);
 									CalDay cal5 = new CalDay(today_bad);
 									//Construct a new Appointment object with the initial data
-									for(int j = 0; j < 100; j++){
-									Appt appt = new Appt(startHour,
+									for(int j = 0; j < 50; j++){
+									Appt appt = new Appt(startHourg,
 													 startMinuteg ,
 													 startDayg3 ,
 													 startMonthg3 ,
 													 startYearg2 ,
 													 title,
 													description);
+													Appt appt2 = new Appt(startHourg,
+																	 startMinuteg ,
+																	 startDayg3 ,
+																	 startMonthg3 ,
+																	 startYearg2 ,
+																	 title,
+																	description);
 													int sizeArray=ValuesGenerator.getRandomIntBetween(random, 0, 8);
 												 int recrand = ValuesGenerator.getRandomIntBetween(random, 0, 10);
 												 int[] recurDays;
@@ -241,23 +264,34 @@ public class TimeTableRandomTest {
 
 										//cal5.addAppt(appt);
 										int recrand5 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
-										if(j == 49){
+										if(j%10 == 0){
 											appt.setStartMinute(-1);
-											cal2.getAppts().add(j, appt);
 											//numApps++;
-											break;
 										}
 										else if(recrand5 == 0){
 											appt = null;
 										}
-										cal2.addAppt(appt);
-										cal5.addAppt(appt);
-										//cal2.getAppts().add(0, appt);
+										try {
+										//cal2.addAppt(appt);
+										//cal5.addAppt(appt);
+										cal2.getAppts().add(0, appt);
+										cal2.getAppts().add(1, appt);
+										cal2.getAppts().add(2, appt);
+										cal5.getAppts().add(0, appt);
+										cal5.getAppts().add(1, appt);
+										cal5.getAppts().add(2, appt);
 										//numApps++;
+										appts = tb.deleteAppt(cal5.getAppts(), appt2);
 										appts = tb.deleteAppt(null, appt);
+										assertEquals(null, appts);
 										appts = tb.deleteAppt(cal5.getAppts(), null);
+										assertEquals(null, appts);
+										appts = tb.deleteAppt(cal3.getAppts(), appt);
 										appts = tb.deleteAppt(cal5.getAppts(), appt);
 										appts2 = tb.deleteAppt(cal2.getAppts(), appt);
+									}catch(NullPointerException e) {
+
+									}
 									}
 
 								 //if(!appt.getValid())continue;
@@ -268,14 +302,15 @@ public class TimeTableRandomTest {
 
 									}
 
+/*
 									 elapsed = (Calendar.getInstance().getTimeInMillis() - startTime);
 												if((iteration%10000)==0 && iteration!=0 )
 															System.out.println("elapsed time: "+ elapsed + " of "+TestTimeout);
-
+*/
 								}
-							}catch(NullPointerException e){
+							//}catch(NullPointerException e){
 
-							}
+							//}
 
 							 System.out.println("Done testing...");
 						 }

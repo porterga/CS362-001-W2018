@@ -67,10 +67,10 @@ public class CalDayRandomTest {
 
 							 System.out.println("Start testing...");
 
-							try{
-								for (int iteration = 0; elapsed < 20000; iteration++) {
+							//try{
+								for (int iteration = 0; elapsed < 1000; iteration++) {
 									long randomseed =System.currentTimeMillis(); //10
-						//			System.out.println(" Seed:"+randomseed );
+									System.out.println(iteration);
 									Random random = new Random(randomseed);
 
 									 int startHour=ValuesGenerator.getRandomIntBetween(random, -1, 100);
@@ -106,6 +106,7 @@ public class CalDayRandomTest {
 
 								 //if(!appt.getValid())continue;
 								for (int i = 0; i < 1000; i++) {
+									System.out.println(i);
 										String methodName = ApptRandomTest.RandomSelectMethod(random);
 
 											   int sizeArray=ValuesGenerator.getRandomIntBetween(random, 0, 8);
@@ -123,24 +124,30 @@ public class CalDayRandomTest {
 											   appt.setRecurrence(recurDays, recur, recurIncrement, recurNumber);
 												 int recrand2 = ValuesGenerator.getRandomIntBetween(random, 0, 10);
 												 if(recrand2 == 0){
+													 try{
 													 cal3.getAppts().add(0, appt);
 													 cal3.getAppts().add(1, appt2);
 													 cal3.getAppts().add(2, appt3);
 													 cal2.addAppt(appt);
 													 cal2.addAppt(appt2);
 													 cal2.addAppt(appt3);
+													 cal2.addAppt(appt2);
 													 assertEquals(3, cal2.getSizeAppts());
 													 assertEquals(cal3.getAppts(), cal2.getAppts());
+												 }catch(NullPointerException d){}
 												 }
 												 else{
+													 try{
 													cal4.getAppts().add(0, appt);
 													cal4.getAppts().add(1, appt2);
 													cal4.getAppts().add(2, appt3);
 												 	cal.addAppt(appt);
 													cal.addAppt(appt2);
 													cal.addAppt(appt3);
+													cal.addAppt(appt2);
 													assertEquals(3, cal.getSizeAppts());
 													assertEquals(cal4.getAppts(), cal.getAppts());
+												}catch(NullPointerException e){}
 												}
 									}
 
@@ -149,9 +156,9 @@ public class CalDayRandomTest {
 								              System.out.println("elapsed time: "+ elapsed + " of "+TestTimeout);
 
 								}
-							}catch(NullPointerException e){
+						//	}catch(NullPointerException e){
 
-							}
+							//}
 
 							 System.out.println("Done testing...");
 						 }
