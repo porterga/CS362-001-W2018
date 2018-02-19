@@ -80,6 +80,11 @@ public class ApptRandomTest {
 				          startYear ,
 				          title,
 				         description);
+
+			  if(appt.getStartHour()>24 || appt.getStartHour()<0 || appt.getStartMinute()<0 || appt.getStartMinute()>59 || appt.getStartDay()<1){
+					assertFalse(appt.getValid());
+				}
+
 			 if(!appt.getValid())continue;
 			for (int i = 0; i < NUM_TESTS; i++) {
 					String methodName = ApptRandomTest.RandomSelectMethod(random);
@@ -101,6 +106,9 @@ public class ApptRandomTest {
 						   int recurIncrement = ValuesGenerator.RandInt(random);
 						   int recurNumber=ApptRandomTest.RandomSelectRecurForEverNever(random);
 						   appt.setRecurrence(recurDays, recur, recurIncrement, recurNumber);
+							 assertEquals(recur, appt.getRecurBy());
+						   assertEquals(recurIncrement, appt.getRecurIncrement());
+						   assertEquals(recurNumber, appt.getRecurNumber());
 						}
 				}
 
@@ -115,5 +123,7 @@ public class ApptRandomTest {
 
 		 System.out.println("Done testing...");
 	 }
+
+
 
 }

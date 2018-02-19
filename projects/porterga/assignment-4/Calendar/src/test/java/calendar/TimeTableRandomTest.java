@@ -69,7 +69,7 @@ public class TimeTableRandomTest {
 							 System.out.println("Start testing...");
 
 							try{
-								for (int iteration = 0; iteration < 1000; iteration++) {
+								for (int iteration = 0; iteration < 10000; iteration++) {
 									long randomseed =System.currentTimeMillis(); //10
 						//			System.out.println(" Seed:"+randomseed );
 									Random random = new Random(randomseed);
@@ -112,25 +112,26 @@ public class TimeTableRandomTest {
  												 else{
  													 recurDays=ValuesGenerator.generateRandomArray(random, sizeArray);
  												 }
-												 int recrand6 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
  												 int recur=ApptRandomTest.RandomSelectRecur(random);
  												 int recurIncrement = ValuesGenerator.RandInt(random);
  												 int recurNumber=ApptRandomTest.RandomSelectRecurForEverNever(random);
 												 int[] myArray = {1, 2, 3};
- 												 appt.setRecurrence(recurDays, recur, recurIncrement, recrand6);
+ 												 appt.setRecurrence(myArray, recur, recurIncrement, 100);
  												 int recrand2 = ValuesGenerator.getRandomIntBetween(random, 0, 10);
 
 										cal5.addAppt(appt);
 										int recrand5 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
 										if(j == 49){
 											appt.setStartMinute(-1);
-											cal2.getAppts().add(j, appt);
+											cal2.addAppt(appt);
+											//cal2.getAppts().add(j, appt);
 											break;
 										}
 										else if(recrand5 == 0){
 											appt = null;
 										}
-										cal2.getAppts().add(j, appt);
+										cal2.addAppt(appt);
+										//cal2.getAppts().add(j, appt);
 									}
 
 								 //if(!appt.getValid())continue;
@@ -141,9 +142,14 @@ public class TimeTableRandomTest {
 												 /*if(cal2.getAppts().size() == 0)
 												 	System.out.println("yes");*/
 												 cals = tb.getApptRange(cal2.getAppts(), today, today_bad);
+												 assertNotEquals(cals, tb.getApptRange(cal2.getAppts(), today, today_bad));
 												 cals = tb.getApptRange(cal2.getAppts(), today_bad, today);
+												 assertNotEquals(cals, tb.getApptRange(cal2.getAppts(), today_bad, today));
+
 												 cals = tb.getApptRange(cal5.getAppts(), today, today_bad2);
+												 assertNotEquals(cals, tb.getApptRange(cal5.getAppts(), today, today_bad2));
 												 cals = tb.getApptRange(cal5.getAppts(), today_bad2, today);
+												 assertNotEquals(cals, tb.getApptRange(cal5.getAppts(), today_bad2, today));
 
 									}
 
@@ -183,7 +189,7 @@ public class TimeTableRandomTest {
 							 System.out.println("Start testing...");
 
 							try{
-								for (int iteration = 0; iteration < TestTimeout; iteration++) {
+								for (int iteration = 0; iteration < 1000; iteration++) {
 									long randomseed =System.currentTimeMillis(); //10
 						//			System.out.println(" Seed:"+randomseed );
 									Random random = new Random(randomseed);
@@ -226,24 +232,30 @@ public class TimeTableRandomTest {
 												 else{
 													 recurDays=ValuesGenerator.generateRandomArray(random, sizeArray);
 												 }
-												 int recrand6 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
 												 int recur=ApptRandomTest.RandomSelectRecur(random);
 												 int recurIncrement = ValuesGenerator.RandInt(random);
 												 int recurNumber=ApptRandomTest.RandomSelectRecurForEverNever(random);
 												 int[] myArray = {1, 2, 3};
-												 appt.setRecurrence(recurDays, recur, recurIncrement, recrand6);
+												 appt.setRecurrence(myArray, recur, recurIncrement, 100);
 												 int recrand2 = ValuesGenerator.getRandomIntBetween(random, 0, 10);
 
 										//cal5.addAppt(appt);
 										int recrand5 = ValuesGenerator.getRandomIntBetween(random, 0, 100);
-
-										if(recrand5 == 0){
+										if(j == 49){
+											appt.setStartMinute(-1);
+											cal2.getAppts().add(j, appt);
+											//numApps++;
+											break;
+										}
+										else if(recrand5 == 0){
 											appt = null;
 										}
-										for(int h = 0; h<recrand6; h++){
-											cal2.addAppt(appt);
-											cal5.addAppt(appt);
-									}
+										cal2.addAppt(appt);
+										cal5.addAppt(appt);
+										//cal2.getAppts().add(0, appt);
+										//numApps++;
+										appts = tb.deleteAppt(null, appt);
+										appts = tb.deleteAppt(cal5.getAppts(), null);
 										appts = tb.deleteAppt(cal5.getAppts(), appt);
 										appts2 = tb.deleteAppt(cal2.getAppts(), appt);
 									}
@@ -251,6 +263,7 @@ public class TimeTableRandomTest {
 								 //if(!appt.getValid())continue;
 								for (int i = 0; i < 10; i++) {
 										String methodName = ApptRandomTest.RandomSelectMethod(random);
+
 
 
 									}
