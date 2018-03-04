@@ -1,0 +1,22 @@
+Bug 1:
+The location of the bug is line 115 of Appt.java.
+The line of code is: if(startHour<=0 || startHour>=23)
+The bug is in the conditional operators <= and >=. The operators should be < and >.
+The line of code should therefore read: if(startHour<0 || startHour>23)
+The reason for this is, people should be allowed to make appointments on the first hour of a day and the last hour,
+but this bug prevents it. 
+To fix the bug, remove the equals from the two comparative operators.
+When I ran my tests on this code, my test case that tests the isValid() function reported a few failures. The failures
+were on my assertions on isValid() where startHour was equal to 23 or 0 and I asserted the return value to be false.
+This then led me to find the bug in isValid().
+
+Bug 2:
+The location of this bug is line 53 of TimeTable.java
+The line of code is: for (int i = 0; i <= appts.size(); i++) {
+The bug is that the for loop runs once too many, the break condition should be i < appts.size(), not i <= appts.size().
+The line should therefor read for (int i = 0; i < appts.size(); i++) {
+The reason this is a problem is that there is an "indexOutOfBounds" error on the last iteration of the for loop.
+To fix the bug, the for loop needs to run one less time so that there is no "indexOutOfBounds" error when calling getApptRange().
+When I ran my tests on this code, every time getApptRange() was called, there was an error. Further investigation 
+found that the error was an "indexOutOfBounds" error. From there it was pretty easy to see that the main for loop in
+getApptRange() was running once too many.
