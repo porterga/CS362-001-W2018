@@ -23,7 +23,8 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
 //You can use this function to implement your manual testing	   
-	   
+       UrlValidator validator1 = new UrlValidator();
+       assertTrue(validator1.isValid("www.google.com"));
    }
    
    
