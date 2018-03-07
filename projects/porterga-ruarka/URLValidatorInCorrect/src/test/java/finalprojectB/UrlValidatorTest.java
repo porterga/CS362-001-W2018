@@ -24,7 +24,21 @@ public class UrlValidatorTest extends TestCase {
    {
 //You can use this function to implement your manual testing	   
        UrlValidator validator1 = new UrlValidator();
-       assertTrue(validator1.isValid("www.google.com"));
+       //----> FAILURE assertTrue(validator1.isValid("http://oregonstate.edu/"));
+       //----> FAILURE assertTrue(validator1.isValid("http://www.google.com"));
+       assertFalse(validator1.isValid("www,google.com"));
+       assertFalse(validator1.isValid("http:\\google.com"));
+       assertFalse(validator1.isValid("http://google"));
+       assertFalse(validator1.isValid("google.com"));
+       assertFalse(validator1.isValid(null));
+       assertFalse(validator1.isValid("://google.com"));
+       assertFalse(validator1.isValid("http:/google.com"));
+       assertFalse(validator1.isValid(""));
+       //----> FAILURE assertTrue(validator1.isValid("https://google.com"));
+       //----> FAILURE assertTrue(validator1.isValid("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt"));
+       //----> FAILURE assertTrue(validator1.isValid("https://en.wikipedia.org/wiki/HTTPS"));
+       //----> FAILURE assertTrue(validator1.isValid("http://localhost:3000/"));
+       //----> FAILURE assertTrue(validator1.isValid("https://oregonstate.teamdynamix.com/TDClient/KB/"));
    }
    
    
