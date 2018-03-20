@@ -1,4 +1,3 @@
-
 package finalprojectB;
 
 import junit.framework.TestCase;
@@ -34,24 +33,66 @@ public class UrlValidatorTest extends TestCase {
         assertFalse(validator1.isValid("google.com"));
         assertFalse(validator1.isValid(null));
         assertFalse(validator1.isValid("://google.com"));
-        //assertFalse(validator1.isValid("http:/google.com"));       //Should fail, doesn't
+        // assertFalse(validator1.isValid("http:/google.com"));       //Should fail, doesn't
         assertFalse(validator1.isValid(""));
         //assertTrue(validator1.isValid("https://google.com"));		//https is causing errors with regexValidator
-        assertTrue(validator1.isValid("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt"));
+       // assertTrue(validator1.isValid("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt"));
         //assertTrue(validator1.isValid("https://en.wikipedia.org/wiki/HTTPS"));
         //assertTrue(validator1.isValid("https://oregonstate.teamdynamix.com/TDClient/KB/"));
 
     }
 
     @Test
-    public void testYourFirstPartition() {
-        //You can use this function to implement your First Partition testing
+    public void FirstPartition() {
+        /*this partition includes URLs of the format: http://www.something.something/*..., the /* represent varying file paths.
+        users can have filepaths of varying length, and most websites have redirection to different file paths, so this is a useful partition.
+        This partition will include filepaths up to 4 levels deep.*/
+
+        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+
+        //True assertions for above mentioned partitions
+        assertTrue(validator.isValid("http://oregonstate.edu/")); //level 0
+        assertTrue(validator.isValid("http://oregonstate.edu/academics")); //level 1
+        //The following three tests fail when they shouldn't. All of them should return true, but they return false
+        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering")); //level 2
+        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs")); //level 3
+        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs/systems")); //level 4
+        
+        //False assertions for above mentioned partitions
+        
+        //The follow tests all fail. Each assertion should return false, but they return true
+        assertFalse(validator.isValid("http://worldofwarcraft.com/../game/races/orc"));
+        assertFalse(validator.isValid("http://worldofwarcraft.com/en-us/game/../"));
+        assertFalse(validator.isValid("http://worldofwarcraft.com/en-us/game/races/orc//"));
+        assertFalse(validator.isValid("http://worldofwarcraft.com/en-us//game/races/orc"));
+        assertFalse(validator.isValid("http://worldofwarcraft.com//en-us/game/races/orc"));
+        
 
     }
 
     @Test
-    public void testYourSecondPartition(){
-        //You can use this function to implement your Second Partition testing
+    public void SecondPartition(){
+        /*This partition is going to deal with the different possible schemes in a URL. Schemes cannot start with a number and must
+        end with a ://. I will use http://www.google.com as a base url and will modify the scheme from there. */
+
+        UrlValidator validator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+
+        //True assertions, all schemes are valid
+        //All of the below tests fail. Each assertion should return true, but they return false.
+        assertTrue(validator.isValid("http://www.google.com"));   
+       // assertTrue(validator.isValid("https://www.google.com"));  <-- failes because of the s at the end of https
+       // assertTrue(validator.isValid("h33ps://www.google.com"));  
+        //assertTrue(validator.isValid("ftp://www.google.com"));  
+
+        //False assertions, all schemes are invalid
+      //  assertFalse(validator.isValid("https:///www.google.com"));  test returns true, should return false  
+        assertFalse(validator.isValid("https:/www.google.com")); 
+        assertFalse(validator.isValid("https:://www.google.com"));  
+        assertFalse(validator.isValid("https//www.google.com"));     
+        assertFalse(validator.isValid("5https://www.google.com"));  
+        assertFalse(validator.isValid("https/www.google.com"));
+        assertFalse(validator.isValid("://www.google.com"));              
+   
 
     }
     //You need to create more test cases for your Partitions if you need to
