@@ -29,16 +29,16 @@ public class UrlValidatorTest extends TestCase {
         assertTrue(validator1.isValid("http://www.google.com"));
         assertFalse(validator1.isValid("www,google.com"));
         assertFalse(validator1.isValid("http:\\\\google.com"));
-        //assertFalse(validator1.isValid("http://google"));          //Should fail, doesn't.
+        assertFalse(validator1.isValid("http://google"));          //Should fail, doesn't.
         assertFalse(validator1.isValid("google.com"));
         assertFalse(validator1.isValid(null));
         assertFalse(validator1.isValid("://google.com"));
-        // assertFalse(validator1.isValid("http:/google.com"));       //Should fail, doesn't
+        assertFalse(validator1.isValid("http:/google.com"));       //Should fail, doesn't
         assertFalse(validator1.isValid(""));
-        //assertTrue(validator1.isValid("https://google.com"));		//https is causing errors with regexValidator
-       // assertTrue(validator1.isValid("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt"));
-        //assertTrue(validator1.isValid("https://en.wikipedia.org/wiki/HTTPS"));
-        //assertTrue(validator1.isValid("https://oregonstate.teamdynamix.com/TDClient/KB/"));
+        assertTrue(validator1.isValid("https://google.com"));		//https is causing errors with regexValidator
+        assertTrue(validator1.isValid("ftp://ftp.funet.fi/pub/standards/RFC/rfc959.txt"));
+        assertTrue(validator1.isValid("https://en.wikipedia.org/wiki/HTTPS"));
+        assertTrue(validator1.isValid("https://oregonstate.teamdynamix.com/TDClient/KB/"));
 
     }
 
@@ -54,9 +54,9 @@ public class UrlValidatorTest extends TestCase {
         assertTrue(validator.isValid("http://oregonstate.edu/")); //level 0
         assertTrue(validator.isValid("http://oregonstate.edu/academics")); //level 1
         //The following three tests fail when they shouldn't. All of them should return true, but they return false
-        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering")); //level 2
-        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs")); //level 3
-        //assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs/systems")); //level 4
+        assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering")); //level 2
+        assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs")); //level 3
+        assertTrue(validator.isValid("http://oregonstate.edu/academics/engineering/cs/systems")); //level 4
         
         //False assertions for above mentioned partitions
         
@@ -80,12 +80,12 @@ public class UrlValidatorTest extends TestCase {
         //True assertions, all schemes are valid
         //All of the below tests fail. Each assertion should return true, but they return false.
         assertTrue(validator.isValid("http://www.google.com"));   
-       // assertTrue(validator.isValid("https://www.google.com"));  <-- failes because of the s at the end of https
-       // assertTrue(validator.isValid("h33ps://www.google.com"));  
-        //assertTrue(validator.isValid("ftp://www.google.com"));  
+        assertTrue(validator.isValid("https://www.google.com"));  //<-- failes because of the s at the end of https
+        assertTrue(validator.isValid("h33ps://www.google.com"));  
+        assertTrue(validator.isValid("ftp://www.google.com"));  
 
         //False assertions, all schemes are invalid
-      //  assertFalse(validator.isValid("https:///www.google.com"));  test returns true, should return false  
+        assertFalse(validator.isValid("https:///www.google.com"));  test returns true, should return false  
         assertFalse(validator.isValid("https:/www.google.com")); 
         assertFalse(validator.isValid("https:://www.google.com"));  
         assertFalse(validator.isValid("https//www.google.com"));     
